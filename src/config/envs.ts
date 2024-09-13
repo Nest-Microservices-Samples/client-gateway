@@ -6,15 +6,23 @@ import * as joi from 'joi'; // Import Joi for schema validation
 // Define an interface for type safety
 interface EnvVars {
     PORT: number;
+
     PRODUCTS_MICROSERVICE_HOST: string;
     PRODUCTS_MICROSERVICE_PORT: number;
+
+    ORDERS_MICROSERVICE_HOST:  string;
+    ORDERS_MICROSERVICE_PORT: number;
 }
 
 // Define the validation schema for environment variables
 const envsSchema = joi.object({
     PORT: joi.number().required(), // PORT must be a number and is required
+
     PRODUCTS_MICROSERVICE_HOST: joi.string().required(), // PRODUCTS_MICROSERVICE_HOST must be a string and is required
     PRODUCTS_MICROSERVICE_PORT: joi.number().required(), // PRODUCTS_MICROSERVICE_PORT must be a number and is required
+
+    ORDERS_MICROSERVICE_HOST: joi.string().required(), // ORDERS_MICROSERVICE_HOST must be a string and is required
+    ORDERS_MICROSERVICE_PORT: joi.number().required(), // ORDERS_MICROSERVICE_PORT must be a number and is required
 })
 .unknown(true); // Allow unknown environment variables
 
@@ -32,6 +40,10 @@ const envVars: EnvVars = value;
 // Export the validated and typed environment variables
 export const envs = {
     port: envVars.PORT,
+
     productsMicroserviceHost: envVars.PRODUCTS_MICROSERVICE_HOST,
     productsMicroservicePort: envVars.PRODUCTS_MICROSERVICE_PORT,
+
+    ordersMicroserviceHost: envVars.ORDERS_MICROSERVICE_HOST,
+    ordersMicroservicePort: envVars.ORDERS_MICROSERVICE_PORT,
 }
