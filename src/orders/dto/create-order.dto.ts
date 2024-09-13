@@ -1,4 +1,4 @@
-import { IsEnum, IsNumber, IsOptional, IsPositive } from "class-validator";
+import { IsBoolean, IsEnum, IsNumber, IsOptional, IsPositive } from "class-validator";
 import { OrderStatus, OrderStatusList } from "../enum/order.enum";
 
 export class CreateOrderDto {
@@ -17,5 +17,7 @@ export class CreateOrderDto {
     @IsOptional()
     status: OrderStatus = OrderStatus.PENDING;
 
+    @IsBoolean()
+    @IsOptional()
     paid: boolean = false;
 }
