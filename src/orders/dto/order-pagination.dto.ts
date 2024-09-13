@@ -6,7 +6,7 @@ export class OrderPaginationDto extends PaginationDto {
 
     @IsOptional()
     @IsEnum( OrderStatus, {
-        message: `Valid status are ${ OrderStatusList }`
+        message: `Valid status are ${OrderStatusList.join(', ')}`
     })
     status: OrderStatus;
 }
