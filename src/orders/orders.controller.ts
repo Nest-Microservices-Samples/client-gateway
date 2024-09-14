@@ -15,7 +15,7 @@ export class OrdersController {
   ) {}
 
   @Post()
-  create(@Body() createOrderDto: CreateOrderDto) {
+  create( @Body() createOrderDto: CreateOrderDto ) {
     return this.ordersClient.send( 'createOrder', createOrderDto );
   }
 
@@ -43,7 +43,7 @@ export class OrdersController {
   }
 
   @Get('id/:id')
-  async findOne( @Param('id', ParseUUIDPipe ) id: string ) {
+  async findOne( @Param( 'id', ParseUUIDPipe ) id: string ) {
     try {
 
       const order = await firstValueFrom( this.ordersClient.send( 'findOneOrder', { id} ))
@@ -57,7 +57,7 @@ export class OrdersController {
 
   @Patch(':id')
   changeStatus(
-    @Param('id', ParseUUIDPipe) id: string,
+    @Param( 'id', ParseUUIDPipe ) id: string,
     @Body() statusDto: StatusDto,
   ) {
 
