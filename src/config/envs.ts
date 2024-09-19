@@ -7,27 +7,22 @@ import * as joi from 'joi'; // Import Joi for schema validation
 interface EnvVars {
     PORT: number;
 
-    PRODUCTS_MICROSERVICE_HOST: string;
-    PRODUCTS_MICROSERVICE_PORT: number;
-
-    ORDERS_MICROSERVICE_HOST:  string;
-    ORDERS_MICROSERVICE_PORT: number;
+    NATS_SERVERS: string[];
 }
 
 // Define the validation schema for environment variables
 const envsSchema = joi.object({
     PORT: joi.number().required(), // PORT must be a number and is required
 
-    PRODUCTS_MICROSERVICE_HOST: joi.string().required(), // PRODUCTS_MICROSERVICE_HOST must be a string and is required
-    PRODUCTS_MICROSERVICE_PORT: joi.number().required(), // PRODUCTS_MICROSERVICE_PORT must be a number and is required
-
-    ORDERS_MICROSERVICE_HOST: joi.string().required(), // ORDERS_MICROSERVICE_HOST must be a string and is required
-    ORDERS_MICROSERVICE_PORT: joi.number().required(), // ORDERS_MICROSERVICE_PORT must be a number and is required
+    NATS_SERVERS: joi.array().items( joi.string() ).required(), // NATS_SERVERS must be an array of strings and is required
 })
 .unknown(true); // Allow unknown environment variables
 
 // Validate the environment variables against the schema
-const { error, value } = envsSchema.validate( process.env );
+const { error, value } = envsSchema.validate({
+    ...process.env, // Load environment variables
+    NATS_SERVERS: process.env.NATS_SERVERS?.split(','), // Load the default value for NATS_SERVICE
+});
 
 // Throw an error if validation fails
 if ( error ) {
@@ -41,9 +36,5 @@ const envVars: EnvVars = value;
 export const envs = {
     port: envVars.PORT,
 
-    productsMicroserviceHost: envVars.PRODUCTS_MICROSERVICE_HOST,
-    productsMicroservicePort: envVars.PRODUCTS_MICROSERVICE_PORT,
-
-    ordersMicroserviceHost: envVars.ORDERS_MICROSERVICE_HOST,
-    ordersMicroservicePort: envVars.ORDERS_MICROSERVICE_PORT,
+    natsServers: envVars.NATS_SERVERS,
 }

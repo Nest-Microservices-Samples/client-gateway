@@ -41,4 +41,7 @@ The Client Gateway acts as the communication point between clients and our servi
 
 ---
 
-Built with ❤️ using NestJS.
+## Nats
+```
+docker run -d --name nats-server -p 4222:4222 -p 8222:8222 nats
+```
